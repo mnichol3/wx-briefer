@@ -1,0 +1,37 @@
+# Configuration YAML file for wc brief constructor scripts
+#
+# Package: wx-brief-maker
+#
+# Matt Nicholson
+# 9 Feb 2020
+---
+urls:
+  sfc_analysis:
+    base: https://www.wpc.ncep.noaa.gov/sfc/namussfcwbg.jpg
+  conv_outlook:
+    day_1: https://www.spc.noaa.gov/products/outlook/day1otlk.html
+    day_2: https://www.spc.noaa.gov/products/outlook/day2otlk.html
+  fire_outlook:
+    day_1: https://www.spc.noaa.gov/products/fire_wx/day1otlk_fire.gif
+    day_2: https://www.spc.noaa.gov/products/fire_wx/day2otlk_fire.gif
+  natl_fcst_chart:
+    base: https://www.wpc.ncep.noaa.gov/national_forecast/natfcst.php
+  shrt_rng_fcst:
+    base: https://www.wpc.ncep.noaa.gov/basicwx/basicwx_ndfd.php
+  snow_composite:
+    day_1: https://www.wpc.ncep.noaa.gov/wwd/day1_composite.gif
+    day_2: https://www.wpc.ncep.noaa.gov/wwd/day2_composite.gif
+    day_3: https://www.wpc.ncep.noaa.gov/wwd/day3_composite.gif
+  qpf:
+    day_1: https://www.wpc.ncep.noaa.gov/qpf/qpf1.shtml
+    day_2: https://www.wpc.ncep.noaa.gov/qpf/day2.shtml
+    day_3: https://www.wpc.ncep.noaa.gov/qpf/day3.shtml
+  wpc:
+    base: https://www.wpc.ncep.noaa.gov
+  faa:
+    ois: https://www.fly.faa.gov/ois/jsp/summary_sys.jsp
+    adv: https://www.fly.faa.gov/adv/adv_spt.jsp
+dirs:
+  img_out: ./temp
+  input: ./input
+  faa_out: ./output

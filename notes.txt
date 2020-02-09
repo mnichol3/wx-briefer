@@ -1,0 +1,64 @@
+
+NATIONAL PROGRAMS
+SFO...1924-0559z...ALL+CZV...WEATHER/WIND...AVG-83...AAR-30...PR-30...ADVZY-047...DA
+
+GROUND STOPS
+SFO...2230z...POE-MED...1-TIER+CANADA...WEATHER/WIND...ADVZY-053
+
+
+
+
+<!-- ----- Program Info ----- -->
+
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+
+   <tr>
+   <th class=caption colspan="10">
+      <table border="0" width="100%">
+         <tr>
+         <th class=caption>NATIONAL PROGRAMS</th>
+         <th class=caption width ="5%" align="right"><A HREF='javascript:HelpWindowGrndDelay()'><img SRC="/images/ois/help.gif" alt="help" BORDER=0 align=right></A></th>
+         </tr>
+      </table>
+   </th>
+   </tr>
+
+   <tr>
+     <th width="10%">PROGRAM NAME</th>
+     <th width="5%">START</th>
+     <th width="5%">END</th>
+     <th width="25%">SCOPE</th>
+     <th width="30%">REASON</th>
+     <th width="5%">AVG</th>
+     <th width="5%">AAR</th>
+     <th width="5%">PR</th>
+     <th width="5%">ADVZY</th>
+     <th width="5%">DA</th>
+   </tr>
+
+   <tr><td>
+CYYZ</td><td>
+0000</td><td>
+0459</td><td>
+ZOB 1ST TIER</td><td>
+WEATHER / SNOW-ICE</td><td>
+210</td><td>
+36</td><td>
+36</td><td>
+<a href='adv_oisedit_dis.jsp?number=54&amp;day=02092020&amp;gstop=-1&amp;gdp=113797'>054</a></td>
+<td>-</td></tr>
+<tr><td>
+SFO</td><td>
+1924</td><td>
+0559</td><td>
+ALL + CZV</td><td>
+WEATHER / WIND</td><td>
+83</td><td>
+30</td><td>
+30</td><td>
+<a href='adv_oisedit_dis.jsp?number=47&amp;day=02092020&amp;gstop=-1&amp;gdp=113796'>047</a></td>
+<td><a href="javascript:Open_DA('3475201');">DA</a></td></tr>
+
+
+
+</table>
