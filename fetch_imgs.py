@@ -68,12 +68,9 @@ def parse_sfc_analysis(link_dict, fname_dict):
     """
     f_name = 'temp/sfc_analysis.png'
     url = link_dict["sfc_analysis"][0]
-
     print("Fetching WPC Surface Analysis...")
-
     download_image(url, f_name, 'PNG')
     fname_dict['sfc_analysis'] = f_name
-
     return fname_dict
 
 
@@ -93,36 +90,25 @@ def parse_conv_outlook(link_dict, fname_dict):
         Dictionary containing local filenames
     """
     time_re = r'\d{4} (\d{4}) UTC Day'
-
     f_names = ['temp/conv_outlk_d1.gif', 'temp/conv_outlk_d2.gif']
-
     http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-
     for idx, url in enumerate(link_dict["conv_outlook"]):
         idx_adj = idx + 1
-
         print("Fetching Day {} SPC Convective Outlook...".format(idx_adj))
-
         response = http.request('GET', url)
         soup = BeautifulSoup(response.data, features="html.parser")
-
         # Find the filename of the img
         tags = soup.find("td", {"class": "zz"})
-
         # Extract the validity time of the current image
         match = re.search(time_re, tags.contents[0])
         if (match):
             valid_time = match.group(1)
-
         # Modify original url to go directly to the image
         url = url.replace(".html", "")
         url += '_{}.gif'.format(valid_time)
-
         download_image(url, f_names[idx], 'GIF')
-
     fname_dict['conv_outlk_d1'] = f_names[0]
     fname_dict['conv_outlk_d2'] = f_names[1]
-
     return fname_dict
 
 
@@ -175,29 +161,21 @@ def parse_shortrange_fsct(link_dict, fname_dict):
     img_re = re.compile("/(\w+)_sm")
 
     http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-
     response = http.request('GET', soup_url)
     soup = BeautifulSoup(response.data, features="html.parser")
-
     tags = soup.find_all("img", {"alt": re.compile(valid_re)})
-
     # Only get up to 24 hrs
     for idx, period in enumerate(tags[:4]):
         curr_hr = hrs[idx]
-
         print("Fetching WPC Short Range Fcst hr {}...".format(curr_hr))
-
         img_src = period.get("src")
         match = re.search(img_re, img_src)
         if (match):
             img_name = match.group(1)
-
             img_url = base_url + '/{}.gif'.format(img_name)
             f_name = "temp/shrt_rng_{}.gif".format(curr_hr)
             download_image(img_url, f_name, "GIF")
-
             fname_dict["shrt_rng_{}".format(curr_hr)] = f_name
-
     return fname_dict
 
 
@@ -217,34 +195,25 @@ def parse_nat_fcst_chart(link_dict, fname_dict):
         Dictionary containing local filenames
     """
     url = link_dict["natl_fcst_chart"][0]
-
     src_re = re.compile("/noaa/noaad\d.gif\?\d+")
 
     http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-
     response = http.request('GET', url)
     soup = BeautifulSoup(response.data, features="html.parser")
-
     tags = soup.find_all("img", {"src": src_re})[0]
     base_ext = tags.get("src")
-
     f_names = [base_ext,
                base_ext.replace("noaad1", "noaad2"),
                base_ext.replace("noaad1", "noaad3")
               ]
-
     url = url.rsplit('/', 2)[0]
     for idx, f_name in enumerate(f_names):
         idx_adj = idx + 1
-
         print("Fetching Day {} WPC National Forecast Chart...".format(idx_adj))
         curr_url = url + '/{}'.format(f_name)
         curr_fname = "temp/nat_fsct_chart_{}.gif".format(idx_adj)
-
         download_image(curr_url, curr_fname, "GIF")
-
         fname_dict["nat_fsct_chart_{}".format(idx_adj)] = curr_fname
-
     return fname_dict
 
 
@@ -315,18 +284,12 @@ def fetch_qpf(link_dict, fname_dict):
 
     for idx, url in enumerate(link_dict["qpf"]):
         idx_adj = idx + 1
-
         print("Fetching Day {} QPF...".format(idx_adj))
-
         http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-
         response = http.request('GET', url)
         soup = BeautifulSoup(response.data, features="html.parser")
-
         tags = soup.find_all("a", {"id": "day{}".format(idx_adj)})[0]
-
         curr_url = link_dict["wpc_base"]
-
         print(tags)
 
 
