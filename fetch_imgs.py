@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
 
-links = {
+URLS = {
     "sfc_analysis"    : ["https://www.wpc.ncep.noaa.gov/sfc/namussfcwbg.jpg"],
 
     "conv_outlook"    : ["https://www.spc.noaa.gov/products/outlook/day1otlk.html",
@@ -50,7 +50,7 @@ def download_image(url, f_name, format):
     i.save(f_name, format=format)
 
 
-def parse_sfc_analysis(link_dict, fname_dict):
+def parse_sfc_analysis(url_dict, fname_dict):
     """
     Fetch the WPC Surface Analysis Chart
 
@@ -59,7 +59,7 @@ def parse_sfc_analysis(link_dict, fname_dict):
 
     Parameters
     ----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
 
     Returns
     -------
@@ -67,20 +67,20 @@ def parse_sfc_analysis(link_dict, fname_dict):
         Dictionary containing local filenames
     """
     f_name = 'temp/sfc_analysis.png'
-    url = link_dict["sfc_analysis"][0]
+    url = url_dict["sfc_analysis"][0]
     print("Fetching WPC Surface Analysis...")
     download_image(url, f_name, 'PNG')
     fname_dict['sfc_analysis'] = f_name
     return fname_dict
 
 
-def parse_conv_outlook(link_dict, fname_dict):
+def parse_conv_outlook(url_dict, fname_dict):
     """
     Fetch the Day 1 & Day 2 SPC Convective Outlooks
 
     Parameters
     ----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
     fname_dict : dict (str, str)
         Dictionary containing local filenames
 
@@ -92,7 +92,7 @@ def parse_conv_outlook(link_dict, fname_dict):
     time_re = r'\d{4} (\d{4}) UTC Day'
     f_names = ['temp/conv_outlk_d1.gif', 'temp/conv_outlk_d2.gif']
     http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-    for idx, url in enumerate(link_dict["conv_outlook"]):
+    for idx, url in enumerate(url_dict["conv_outlook"]):
         idx_adj = idx + 1
         print("Fetching Day {} SPC Convective Outlook...".format(idx_adj))
         response = http.request('GET', url)
@@ -136,13 +136,13 @@ def parse_conv_outlook_simple(fname_dict):
     return fname_dict
 
 
-def parse_shortrange_fsct(link_dict, fname_dict):
+def parse_shortrange_fsct(url_dict, fname_dict):
     """
     Fetch shortrange forecast graphics for hour 6, 12, 18, & 24.
 
     Parameters
     -----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
     fname_dict : dict (str, str)
         Dictionary containing local filenames
 
@@ -151,7 +151,7 @@ def parse_shortrange_fsct(link_dict, fname_dict):
     fname_dict : dict (str, str)
         Dictionary containing local filenames
     """
-    base_url = link_dict["shrt_rng_fcst"][0].rsplit('/', 1)[0]
+    base_url = url_dict["shrt_rng_fcst"][0].rsplit('/', 1)[0]
     # !!! DO NOT REMOVE soup_url !!!
     soup_url = "https://www.wpc.ncep.noaa.gov/basicwx/basic_sfcjpg.shtml"
     hrs = [6, 12, 18, 24]
@@ -179,13 +179,13 @@ def parse_shortrange_fsct(link_dict, fname_dict):
     return fname_dict
 
 
-def parse_nat_fcst_chart(link_dict, fname_dict):
+def parse_nat_fcst_chart(url_dict, fname_dict):
     """
     Fetch the WPC National Forecast Chart image
 
     Parameters
     -----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
     fname_dict : dict (str, str)
         Dictionary containing local filenames
 
@@ -194,7 +194,7 @@ def parse_nat_fcst_chart(link_dict, fname_dict):
     fname_dict : dict (str, str)
         Dictionary containing local filenames
     """
-    url = link_dict["natl_fcst_chart"][0]
+    url = url_dict["natl_fcst_chart"][0]
     src_re = re.compile("/noaa/noaad\d.gif\?\d+")
 
     http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
@@ -242,13 +242,13 @@ def fetch_fire_outlook(fname_dict):
     return fname_dict
 
 
-def fetch_snow_composite(link_dict, fname_dict):
+def fetch_snow_composite(url_dict, fname_dict):
     """
     Fetch the WPC Snowfall Composite graphic for Day 1, 2, & 3
 
     Parameters
     -----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
     fname_dict : dict (str, str)
         Dictionary containing local filenames
 
@@ -258,7 +258,7 @@ def fetch_snow_composite(link_dict, fname_dict):
         Dictionary containing local filenames
     """
     f_names = ['temp/snow_comp_d1.gif', 'temp/snow_comp_d2.gif', 'temp/snow_comp_d3.gif']
-    for idx, url in enumerate(link_dict['snow_composite']):
+    for idx, url in enumerate(url_dict['snow_composite']):
         day = idx + 1
         print("Fetching Day {} Snowfall Composite...".format(day))
         download_image(url, f_names[idx], 'GIF')
@@ -266,13 +266,13 @@ def fetch_snow_composite(link_dict, fname_dict):
     return fname_dict
 
 
-def fetch_qpf(link_dict, fname_dict):
+def fetch_qpf(url_dict, fname_dict):
     """
     Fetch WPC Quantitative Precip Forecast (QPF) graphics
 
     Parameters
     -----------
-    link_dict : dict (str, list of str)
+    url_dict : dict (str, list of str)
     fname_dict : dict (str, str)
         Dictionary containing local filenames
 
@@ -282,14 +282,14 @@ def fetch_qpf(link_dict, fname_dict):
         Dictionary containing local filenames
     """
 
-    for idx, url in enumerate(link_dict["qpf"]):
+    for idx, url in enumerate(url_dict["qpf"]):
         idx_adj = idx + 1
         print("Fetching Day {} QPF...".format(idx_adj))
         http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
         response = http.request('GET', url)
         soup = BeautifulSoup(response.data, features="html.parser")
         tags = soup.find_all("a", {"id": "day{}".format(idx_adj)})[0]
-        curr_url = link_dict["wpc_base"]
+        curr_url = url_dict["wpc_base"]
         print(tags)
 
 
@@ -297,16 +297,16 @@ def main():
     f_names = {}
 
     fetch_fire_outlook(f_names)
-    fetch_snow_composite(links, f_names)
-    # parse_sfc_analysis(links, f_names)
+    fetch_snow_composite(URLS, f_names)
+    # parse_sfc_analysis(URLS, f_names)
     #
-    # parse_conv_outlook(links, f_names)
+    # parse_conv_outlook(URLS, f_names)
     #
-    # parse_shortrange_fsct(links, f_names)
-    # parse_nat_fcst_chart(links, f_names)
+    # parse_shortrange_fsct(URLS, f_names)
+    # parse_nat_fcst_chart(URLS, f_names)
 
 
-    #fetch_qpf(links, f_names)
+    #fetch_qpf(URLS, f_names)
 
 
 

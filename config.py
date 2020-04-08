@@ -42,7 +42,7 @@ class FPT_URL:
 """
 Zones for zone forecast text product.
 Key : State directory
-Val : State forecast zone (doubles as the filename on the ftp server)
+Val : State forecast zone(s) (doubles as the filename on the ftp server)
 """
 FCST_ZONES = {'md': 'mdz014'}
 
