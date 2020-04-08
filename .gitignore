@@ -1,2 +1,8 @@
+# Directories
 temp/
 output/
+__pycache__/
+
+# File extensions
+*.pyc
+
