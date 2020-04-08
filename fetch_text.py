@@ -4,9 +4,6 @@ Fetch NWS test products from their FTP servers
 Matt Nicholson
 7 April 2020
 """
-import os
-import certifi
-import urllib3
 import shutil
 from ftplib import FTP
 
